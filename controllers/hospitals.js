@@ -1,8 +1,16 @@
 const Hospital=require('../models/Hospital');
 
 exports.getHospitals=async (req,res,next)=>{
+    let query;
+    let queryStr=JSON.stringify(req.query);
+    queryStr=queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g,match=>`$${match}`);
+    console.log(queryStr);
+    query=Hospital.find(JSON.parse(queryStr));
+
     try {
-        const hospitals = await Hospital.find();
+        const hospitals = await query;
+        
+
         res.status(200).json({success:true, count:hospitals.length, data:hospitals});
         
     } catch (error) {
