@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser=require('cookie-parser');
+const mongoSanitize=require('express-mongo-sanitize');
 const connectDB=require('./config/db');
 
 //Route files
@@ -22,6 +23,8 @@ app.use(express.json());
 //Cookie parser
 app.use(cookieParser());
 
+//Sanitize data
+app.use(mongoSanitize());
 //Mount routers
 app.use('/api/v1/hospitals',hospitals);
 app.use('/api/v1/auth',auth);
